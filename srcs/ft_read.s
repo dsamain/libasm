@@ -1,5 +1,5 @@
 
-global ft_write
+global ft_read
 
 section .text
 
@@ -7,12 +7,14 @@ section .text
 
 ; rdi: fd, rsi: buf, rdx: count
 
-ft_write:
-    mov eax, 1 ; syscall for write
+ft_read:
+    mov rax, 0
+    mov eax, 0 ; syscall for read
     syscall
     cmp rax, 0
     js error
     ret
+
 
 error:
     mov rax, -1
