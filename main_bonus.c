@@ -14,8 +14,19 @@
 
 void    ft_list_push_front(t_list **begin_list, void *data);
 
+int cmp(char *a, char *b) {
+    printf("cmp %s %s (res = %d)\n", a, b, b[0]-a[0]);
+    return b[0] - a[0];
+}
+
+void free_fct(void *data) {
+    printf("free %s\n", (char*)data);
+}
+
+
+
 int main() {
-    test("bonjour a tous", printf);
+    //test("bonjour a tous", printf);
     {
         printf("\n_______ft_list_push_front_______\n");
         t_list *list = NULL;
@@ -47,22 +58,66 @@ int main() {
         printf("list size: %d\n", ft_list_size(list));
 
     }
+    {
+        printf("\n_______ft_list_sort_______\n");
+        int i = 42;
+
+
+        t_list *list = NULL;
+        printf("list = %p\n", &list);
+        ft_list_push_front(&list, (void*)&"1");
+        ft_list_push_front(&list, (void*)&"2");
+        ft_list_push_front(&list, (void*)&"3");
+        ft_list_push_front(&list, (void*)&"0");
+
+        printf("sort: %d\n", ft_list_sort(&list, cmp));
+        t_list *cur = list;
+        while (cur) {
+            printf("%p: next: %p data: %s\n", cur, cur->next, (char *)(cur->data));
+            cur = cur->next;
+        }
+    }
 
     {
-        printf("\n_______ft_atoi_base_______\n");
-        char *n = "    +---42 ", *b = "0123456789";
-        printf("ft_atoi_base(%s, %s) = %d\n", n, b, ft_atoi_base(n, b));
-        n = "01111111111111111111111111111111", b = "01";
-        printf("ft_atoi_base(%s, %s) = %d\n", n, b, ft_atoi_base(n, b));
-        n = "-2147483648", b = "0123456789";
-        printf("ft_atoi_base(%s, %s) = %d\n", n, b, ft_atoi_base(n, b));
-        n = "", b = "";
-        printf("ft_atoi_base(%s, %s) = %d\n", n, b, ft_atoi_base(n, b));
-        n = "01010", b = "101";
-        printf("ft_atoi_base(%s, %s) = %d\n", n, b, ft_atoi_base(n, b));
-        n = "01010", b = "+01";
-        printf("ft_atoi_base(%s, %s) = %d\n", n, b, ft_atoi_base(n, b));
-        n = "01010", b = "01-";
+        printf("\n_______ft_list_remove_if_______\n");
+        int i = 42;
 
+
+        t_list *list = NULL;
+        printf("list = %p\n", &list);
+        ft_list_push_front(&list, (void*)&"1");
+        ft_list_push_front(&list, (void*)&"0");
+        ft_list_push_front(&list, (void*)&"2");
+        ft_list_push_front(&list, (void*)&"0");
+        ft_list_push_front(&list, (void*)&"3");
+        ft_list_push_front(&list, (void*)&"0");
+
+        printf("list_remove_if: %d\n", ft_list_remove_if(&list, (void*)"0", cmp, free_fct));
+        t_list *cur = list;
+        while (cur) {
+            printf("%p: next: %p data: %s\n", cur, cur->next, (char *)(cur->data));
+            cur = cur->next;
+        }
     }
+
+
+    //{
+        //printf("\n_______ft_atoi_base_______\n");
+        //char *n = "    +---42 ", *b = "0123456789";
+        //printf("ft_atoi_base(%s, %s) = %d\n", n, b, ft_atoi_base(n, b));
+        //n = "01111111111111111111111111111111", b = "01";
+        //printf("ft_atoi_base(%s, %s) = %d\n", n, b, ft_atoi_base(n, b));
+        //n = "-2147483648", b = "0123456789";
+        //printf("ft_atoi_base(%s, %s) = %d\n", n, b, ft_atoi_base(n, b));
+        //n = "", b = "";
+        //printf("ft_atoi_base(%s, %s) = %d\n", n, b, ft_atoi_base(n, b));
+        //n = "01010", b = "101";
+        //printf("ft_atoi_base(%s, %s) = %d\n", n, b, ft_atoi_base(n, b));
+        //n = "01010", b = "+01";
+        //printf("ft_atoi_base(%s, %s) = %d\n", n, b, ft_atoi_base(n, b));
+        //n = "01010", b = "01-";
+
+    //}
+
+
 }
