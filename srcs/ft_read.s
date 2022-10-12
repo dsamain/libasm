@@ -1,5 +1,6 @@
 
 global ft_read
+extern __errno_location
 
 section .text
 
@@ -8,7 +9,6 @@ section .text
 ; rdi: fd, rsi: buf, rdx: count
 
 ft_read:
-    mov rax, 0
     mov eax, 0 ; syscall for read
     syscall
     cmp rax, 0
@@ -17,5 +17,9 @@ ft_read:
 
 
 error:
+    mov rdx, rax
+    call __errno_location
+    imul rdx, rdx, -1
+    mov [rax], rdx
     mov rax, -1
     ret

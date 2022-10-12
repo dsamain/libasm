@@ -8,7 +8,7 @@ OBJS_BONUS = $(SRCS_BONUS:.s=.o)
 
 CC = gcc
 
-#CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 .s.o:
 	nasm -f elf64 $< 
@@ -21,10 +21,18 @@ bonus: all $(OBJS_BONUS)
 
 test : all
 	$(CC) -no-pie $(CFLAGS) main.c $(NAME) -o test
+	./test
 
-testb : bonus
-	$(CC) -no-pie $(CFLAGS) main_bonus.c $(NAME) -o testb
+test_bonus : bonus
+	$(CC) -no-pie $(CFLAGS) main_bonus.c $(NAME) -o test_bonus
+	./test_bonus
 
 clean :
 	rm -Rf $(OBJS)
 	rm -Rf $(OBJS_BONUS)
+	rm -f test
+	rm -f test_bonus
+
+fclean: clean
+	rm -f $(NAME)
+	rm -f $(NAME)

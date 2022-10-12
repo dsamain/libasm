@@ -7,6 +7,10 @@ section .text
 ; rdi: num, rsi: base
 ft_atoi_base:
     mov rax, 0
+    cmp rdi, 0
+    je end
+    cmp rsi, 0
+    je end
     mov rcx, -1 ; counter
 loop_char:
     inc rcx
@@ -32,7 +36,6 @@ ld2:
     cmp al, byte [rsi + r8]
     je error
     jmp ld2
-    jmp ld1
 gen:
     mov rax, 0 ; ret
     mov r8, 1 ; sign
@@ -43,11 +46,11 @@ whitespace_loop:
     je return
     cmp byte [rdi + rcx], ' '
     je whitespace_loop
-    cmp byte [rsi + rcx], 9
-    jl sign_loop
-    cmp byte [rsi + rcx], 13
-    jg sign_loop
-    jmp whitespace_loop
+    mov dh, byte [rdi + rcx]
+    call is_whitespace
+    cmp dl, 1
+    je whitespace_loop
+    jmp sign_loop
 sign_loop_inc:
     inc rcx
 sign_loop:
@@ -87,13 +90,24 @@ check_char: ; check if char is invalid
     je error
     cmp byte [rsi + rcx], '-'
     je error
-    cmp byte [rsi + rcx], ' '
+    mov dh, byte [rsi + rcx]
+    call is_whitespace
+    cmp dl, 1
     je error
-    cmp byte [rsi + rcx], 9 ; if rsi[rcx] < 9 jmp loop
-    jl loop_char
-    cmp byte [rsi + rcx], 13 ; if rsi[rcx] <= 13 jmp loop
-    jle error
     jmp loop_char
 error:
     mov rax, 0
+    ret
+is_whitespace:
+    mov dl, 1
+    cmp dh, ' '
+    je end
+    sub dh, 9
+    cmp dh, 0
+    js end
+    cmp dh, 4
+    jle end 
+    mov dl, 0
+    ret
+end:
     ret

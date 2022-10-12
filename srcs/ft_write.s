@@ -1,5 +1,6 @@
 
 global ft_write
+extern __errno_location
 
 section .text
 
@@ -15,5 +16,9 @@ ft_write:
     ret
 
 error:
+    mov rdx, rax
+    call __errno_location
+    imul rdx, rdx, -1
+    mov [rax], rdx
     mov rax, -1
     ret

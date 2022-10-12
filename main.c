@@ -20,6 +20,12 @@ int main() {
         char *str = "Hello World!\n";
         printf("%ld\n", ft_write(1, str, ft_strlen(str)));
         printf("errno: %d\n", errno);
+        printf("%ld\n", ft_write(12, str, ft_strlen(str)));
+        printf("errno: %d\n", errno);
+        printf("%ld\n", write(12, str, ft_strlen(str)));
+        printf("errno: %d\n", errno);
+        printf("errno error: %s\n", strerror(errno));
+
     }
     {
         printf("\n_______ft_strdup_______\n");
@@ -64,5 +70,23 @@ int main() {
             printf("buf: [%s]\n", buf);
         }
         printf("errno: %s\n", strerror(errno));
+
+        ret = ft_read(fd + 5, buf, 5);
+        printf("\nret: %d\n", ret);
+        if (ret >= 0) {
+            buf[ret] = 0;
+            printf("buf: [%s]\n", buf);
+        }
+        printf("errno: %d\n", errno);
+        printf("strerror: %s\n", strerror(errno));
+
+        ret = read(fd + 5, buf, 5);
+        printf("\nret: %d\n", ret);
+        if (ret >= 0) {
+            buf[ret] = 0;
+            printf("buf: [%s]\n", buf);
+        }
+        printf("errno: %d\n", errno);
+        printf("strerror: %s\n", strerror(errno));
     }
 }
