@@ -1,7 +1,7 @@
 NAME = libasm.a
 
 SRCS = $(addprefix srcs/, ft_strlen.s ft_strcpy.s ft_write.s ft_strdup.s ft_strcmp.s ft_read.s)
-SRCS_BONUS = $(addprefix srcs/bonus/, test.s ft_atoi_base.s ft_list_push_front.s ft_list_size.s ft_list_sort.s ft_list_remove_if.s)
+SRCS_BONUS = $(addprefix srcs/bonus/, ft_atoi_base.s ft_list_push_front.s ft_list_size.s ft_list_sort.s ft_list_remove_if.s sudoku_solver.s)
 
 OBJS = $(SRCS:.s=.o)
 OBJS_BONUS = $(SRCS_BONUS:.s=.o)
@@ -23,9 +23,12 @@ test : all
 	$(CC) -no-pie $(CFLAGS) main.c $(NAME) -o test
 	./test
 
-test_bonus : bonus
+test_bonus: bonus
 	$(CC) -no-pie $(CFLAGS) main_bonus.c $(NAME) -o test_bonus
 	./test_bonus
+
+sudoku: bonus
+	$(CC) -no-pie $(CFLAGS) sudoku.c srcs/bonus/sudoku_solver.o -o sudoku
 
 clean :
 	rm -Rf $(OBJS)
@@ -35,4 +38,4 @@ clean :
 
 fclean: clean
 	rm -f $(NAME)
-	rm -f $(NAME)
+	rm -f sudoku
