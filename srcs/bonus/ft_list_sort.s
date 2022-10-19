@@ -25,14 +25,14 @@ ft_list_sort:
     jmp loop1
 
 loop1_inc:
-    mov r8, [r8]
+    mov r8, [r8 + 8]
 loop1:
     cmp r8, 0
     je return
-    mov r9, [r8]
+    mov r9, [r8 + 8]
     jmp loop2
 loop2_inc:
-    mov r9, [r9]
+    mov r9, [r9 + 8]
 loop2:
     cmp r9, 0
     je loop1_inc
@@ -45,8 +45,8 @@ loop2:
     push rdx
 
     mov rax, rsi
-    mov rdi, [r8 + 8]
-    mov rsi, [r9 + 8]
+    mov rdi, [r8]
+    mov rsi, [r9]
     call rax ; cmp
 
     pop rdx
@@ -61,10 +61,10 @@ loop2:
     jmp loop2_inc
 
 swap:
-    mov r10, [r8 + 8]
-    mov r11, [r9 + 8]
-    mov [r8 + 8], r11
-    mov [r9 + 8], r10
+    mov r10, [r8]
+    mov r11, [r9]
+    mov [r8], r11
+    mov [r9], r10
     jmp loop2_inc
 
 return:

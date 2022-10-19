@@ -59,7 +59,8 @@ int main() {
             buf[ret] = 0;
             printf("buf: [%s]\n", buf);
         }
-        printf("errno: %s\n", strerror(errno));
+        if (ret < 0)
+            printf("errno: %s\n", strerror(errno));
         close(fd);
 
         fd = open("pouet", O_RDONLY);

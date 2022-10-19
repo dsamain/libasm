@@ -11,7 +11,7 @@ ft_list_size:
         cmp rdi, 0
         je return
         inc rax
-        mov rdi, [rdi]
+        mov rdi, [rdi + 8]
         jmp loop
     return:
         ret    

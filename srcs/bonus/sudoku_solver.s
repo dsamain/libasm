@@ -8,8 +8,6 @@ extern _write
 ; dl = current char
 ; rcx = scratch
 sudoku_solver:
-
-
     mov r8, 0
 init_loop:
     call set

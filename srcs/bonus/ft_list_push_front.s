@@ -22,8 +22,8 @@ ft_list_push_front:
     pop rsi
     pop rdi
     mov rcx, [rdi]
-    mov [rax], rcx
-    mov [rax + 8], rsi
+    mov [rax + 8], rcx
+    mov [rax], rsi
     mov [rdi], rax
 
 error:
